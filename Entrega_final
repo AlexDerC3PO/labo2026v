@@ -1,0 +1,5 @@
+# Entrega final · Analista Jr · <Nombre>
+Envío elegido: KA9592_ens4_1900.csv
+1. Correr z728_final_junior_9510, _9511, _9520 y _9530 (en cualquier orden).
+2. Correr z728_ensamble_9592 con corridas c(9510, 9511, 9520, 9530).
+3. El archivo KA9592_ens4_1900.csv de WF9592/kaggle/ es el envío final.
