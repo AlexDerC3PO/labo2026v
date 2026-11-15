@@ -14,7 +14,7 @@ Se parte del workflow oficial `PredFinal/z728_final_junior_power.ipynb`. Del z72
 
 ## Modificaciones respecto de `z728_final_junior_power`
 
-| # | Cambio | Oficial | Esta entrega | Fundamento |
+| # | Cambio | Original z728 | Esta entrega | Fundamento |
 |---|---|---|---|---|
 | 1 | Meses de pandemia en training y final_train | se usan todos los meses desde 201901 | **sin 202003 a 202007** (corridas 9510 y 9511) | Libro, 6.9.1 (período del Grupo A sin esos meses) y 6.16 ("salvedades pandémicas"). Problema #05, Grupo A: excluir la pandemia restringida dio una media levemente mayor que la base, sin significancia. Por eso se cubre con dos corridas que sí usan todos los meses (cambio 5). |
 | 2 | Variables del modelo | incluye `numero_de_cliente` y `foto_mes` | **sin `numero_de_cliente` ni `foto_mes`** | Problema #16: en el Grupo B (clase conocida en 202107) quitar ambos mejoró la ganancia en 10 de 10 semillas (p = 0,006); en el Grupo A (Public de 202109) no la afectó. `foto_mes` no puede extrapolar a un mes no visto; `kmes` se mantiene. |
