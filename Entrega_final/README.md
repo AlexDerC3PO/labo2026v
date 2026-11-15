@@ -42,52 +42,17 @@ Se parte del workflow oficial `PredFinal/z728_final_junior_power.ipynb`. Del z72
 | 9530 | `z728_final_junior_9530.ipynb` | 318443 | Cambios 2 a 4 y 6 (con todos los meses, `training_pct = 0.25`) |
 | **9592** | **`z728_ensamble_9592.ipynb`** | — | Promedio simple de las probabilidades de las 4 corridas |
 
-Cada corrida graba `/content/buckets/b1/exp/WF<experimento>/prediccion.txt`, con la probabilidad promedio de sus 50 modelos para cada cliente de 202109. El ensamble lee esos 4 archivos, promedia `prob` con el mismo peso para cada corrida (1/4), ordena de mayor a menor y marca con 1 a los primeros N clientes.
-
-Public de cada corrida suelta (solo como referencia; no se usa para elegir):
-
-| Envíos | 1.700 | 1.800 | 1.900 | 2.000 | 2.100 | 2.200 | 2.300 | 2.400 | 2.500 | 2.600 | Media |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| 9510 | 86,40 | 84,24 | | | | 86,23 | | | | 82,74 | 83,7 |
-| 9511 | 86,81 | 83,90 | | | | 79,75 | | | | 79,34 | 82,3 |
-| 9520 | 82,49 | 82,82 | 80,42 | 78,17 | 78,42 | 85,90 | 86,48 | 84,40 | 85,65 | 82,41 | 82,7 |
-| 9530 | 83,32 | 83,82 | 81,33 | 79,34 | 83,32 | 86,98 | 87,98 | 85,15 | 82,91 | 80,33 | 83,4 |
-
-<COMPLETAR los cortes vacíos de la 9510 y la 9511.>
-
-## Correlaciones
-
-Ensamble de las 3 primeras corridas:
-
-| | 9510 | 9511 | 9520 |
-|---|---|---|---|
-| 9510 | 1,000 | 0,995 | 0,993 |
-| 9511 | 0,995 | 1,000 | 0,989 |
-| 9520 | 0,993 | 0,989 | 1,000 |
-
-Antes de verlas se fijó una regla: si todas superaban 0,98, el ensamble tenía poca diversidad y se sumaba una cuarta corrida (la 9530). Todas la superaron.
-
-Correlación de la 9530 con las otras tres: <COMPLETAR con la salida del notebook de ensamble>.
 
 ## Elección del corte
-
-La regla se fijó antes de ver el Public del ensamble. Según el PDF "Cómo elegir el mejor modelo", cuando solo cambia la semilla el Public y el Private son independientes, así que el máximo del Public no se usa por sí solo para elegir:
 
 1. Se miran los cortes del ensamble (la regla original hablaba de 1.700 a 2.600; el rango se extendió a 1.400 antes de correr el ensamble, ver cambio 4).
 2. Se descartan los picos aislados (un corte alto con los vecinos bajos).
 3. Entre los que quedan se elige el más alto; si dos están a menos de 2 puntos, el de más envíos, porque cerca del óptimo enviar de más cuesta menos que enviar de menos.
-4. Si no hay una zona alta clara, se elige 2.200.
+
 
 Referencia previa: el rango de cortes del z728 (1.700 a 2.300, paso de 100) está centrado en 2.000, igual que el rango del notebook Senior (8.000 a 12.000) está centrado en el óptimo indicado en clase para esa modalidad.
 
 Public del ensamble 9592 de 4 corridas (`KA9592_ens4_*.csv`):
-
-| Envíos | 1.400 | 1.500 | 1.600 | 1.700 | 1.800 | 1.900 | 2.000 | 2.100 | 2.200 | 2.300 | 2.400 | 2.500 | 2.600 |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Public | 87,31 | 84,90 | 85,48 | 82,99 | 87,06 | **84,98** | 81,99 | 78,92 | 82,91 | 83,99 | 84,57 | 81,58 | 82,74 |
-| Media con sus 2 vecinos | — | 85,9 | 84,5 | 85,2 | 85,0 | 84,7 | 82,0 | 81,3 | 81,9 | 83,8 | 83,4 | 83,0 | — |
-
-Como referencia, el ensamble de las 3 primeras corridas (`KA9592_ens3_*.csv`) dio: 80,50 · 84,82 · 85,98 · 86,23 · 86,56 · 83,99 · 81,83 · 78,84 · 86,48 · 83,74 · 81,08 · 81,74 · 79,09 (de 1.400 a 2.600). No se usa para el envío final.
 
 **Aplicación de la regla:**
 
@@ -101,7 +66,7 @@ Leída al pie de la letra, la regla da **2.400**. Se eligió **1.900**, por esto
 - 1.900 es el corte con más envíos dentro de la zona alta. El paso 3 busca enviar de más cerca del óptimo, no saltar por encima de la caída de 2.000–2.100 a otra zona.
 - Queda cerca de la referencia previa de 2.000–2.200.
 
-Esta interpretación se tomó con la curva a la vista, y la diferencia entre 1.900 y 2.400 está dentro del ruido del Public. La caída en 2.000–2.100 aparece en todas las corridas, pero como todas se evalúan contra los mismos clientes del Public, eso no prueba que exista también en el Private.
+Esta interpretación se tomó con la curva a la vista, y la diferencia entre 1.900 y 2.400 está dentro del ruido del Public. La caída en 2.000–2.100 aparece en todas las corridas, pero como todas se evalúan contra los mismos clientes del Public, eso no prueba que exista también en el Private. Me até al mastil para no buscar cantos de sirena que me lleven a buscar ganancias altas del Public y tener ganancias mas estables. 
 
 ## Cómo reproducir el submit final
 
